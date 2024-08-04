@@ -3,6 +3,7 @@ import { Typography, Paper, Box, Grid, IconButton, Divider } from '@mui/material
 import { useTheme } from '@mui/material/styles'
 import { MenuBar } from '../../components'
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
+import { DataGridViewer } from '../DataGridViewer/DataGridViewer'
 
 export const HomePage = () => {
   const theme = useTheme()
@@ -41,14 +42,14 @@ export const HomePage = () => {
                     padding: theme.spacing(2),
                   }}
                 >
-                  <Typography variant="h5" style={{ color: theme.palette.text.primary }}>
+                  <Typography variant="h6" style={{ color: theme.palette.text.primary }}>
                     Filtros
                   </Typography>
-                  <FilterAltIcon fontSize="large" style={{ color: theme.palette.text.primary }} />
+                  <FilterAltIcon fontSize="medium" style={{ color: theme.palette.text.primary }} />
                 </IconButton>
               </Box>
             </Box>
-            <Divider sx={{ width: '50%', bgcolor: 'text.primary', height: 2 }} />{' '}
+            <Divider sx={{ width: '50%', bgcolor: 'text.primary', height: 2 }} />
           </Paper>
         </Grid>
         <Grid item xs>
@@ -61,9 +62,7 @@ export const HomePage = () => {
               maxHeight: 'calc(100vh - 170px)',
             }}
           >
-            <Typography variant="body1" style={{ color: theme.palette.text.primary }}>
-              Conteúdo do DataGrid aqui
-            </Typography>
+            <DataGridViewer />
           </Paper>
         </Grid>
       </Grid>
