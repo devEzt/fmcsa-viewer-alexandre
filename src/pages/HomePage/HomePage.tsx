@@ -20,7 +20,7 @@ export const HomePage = () => {
   }
 
   return (
-    <Box style={{ minHeight: '100vh', backgroundColor: theme.palette.background.default }}>
+    <Box style={{ minHeight: '95vh', backgroundColor: theme.palette.background.default }}>
       <Grid container direction="column">
         <Grid item>
           <MenuBar />

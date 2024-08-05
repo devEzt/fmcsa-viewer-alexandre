@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { format, parseISO } from 'date-fns'
 import { DataRow } from './types'
+import { Divider, Typography } from '@mui/material'
 
 const fetchSheetData = async (page: number, pageSize: number, headers: string[], filters: any = {}) => {
   const spreadsheetId = '1hB_LjBT9ezZigXnC-MblT2PXZledkZqBnvV23ssfSuE'
@@ -100,12 +101,12 @@ const columns: GridColDef[] = [
   { field: 'entity_type', headerName: 'Entity', flex: 0.8 },
   { field: 'operating_status', headerName: 'Operating Status', flex: 0.8 },
   { field: 'legal_name', headerName: 'Legal Name', flex: 1.5 },
-  { field: 'dba_name', headerName: 'DBA Name', flex: 1 },
-  { field: 'physical_address', headerName: 'Physical Address', flex: 1.5 },
-  { field: 'phone', headerName: 'Phone', flex: 1 },
+  { field: 'dba_name', headerName: 'DBA Name', flex: 1.2 },
+  { field: 'physical_address', headerName: 'Physical Address', flex: 1.6 },
+  { field: 'phone', headerName: 'Phone', flex: 0.8 },
   { field: 'usdot_number', headerName: 'DOT', flex: 0.8 },
   { field: 'mc_mx_ff_number', headerName: 'MC/MX/FF', flex: 0.5 },
-  { field: 'power_units', headerName: 'Power Units', flex: 0.5 },
+  { field: 'power_units', headerName: 'Power Units', flex: 0.5, align: 'center' },
   { field: 'out_of_service_date', headerName: 'Out of Service Date', flex: 0.8 },
 ]
 
