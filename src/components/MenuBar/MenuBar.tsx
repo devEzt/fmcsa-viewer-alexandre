@@ -10,8 +10,11 @@ export const MenuBar = () => {
   const theme = useTheme()
   const [drawerOpen, setDrawerOpen] = useState(false)
 
-  const toggleDrawer = (open: any) => (event: any) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (
+      event.type === 'keydown' &&
+      ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
+    ) {
       return
     }
     setDrawerOpen(open)
@@ -42,7 +45,7 @@ export const MenuBar = () => {
         <IconButton edge="start" color="inherit" aria-label="menu" size="large" onClick={toggleDrawer(true)}>
           <MenuIcon fontSize="large" />
         </IconButton>
-        <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+        <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)} data-testid="drawer">
           {list()}
         </Drawer>
         <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>

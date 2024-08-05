@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { format, parseISO } from 'date-fns'
 import { DataRow } from './types'
-import { Divider, Typography } from '@mui/material'
 
 const fetchSheetData = async (page: number, pageSize: number, headers: string[], filters: any = {}) => {
   const spreadsheetId = '1hB_LjBT9ezZigXnC-MblT2PXZledkZqBnvV23ssfSuE'
@@ -130,6 +129,7 @@ export const DataGridViewer = ({ filters }: any) => {
         })
       })
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

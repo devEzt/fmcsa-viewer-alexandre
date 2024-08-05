@@ -145,7 +145,7 @@ const FilterPanel = ({ onSearch }: any) => {
               fontSize: '1rem',
             }}
           >
-            Limpar
+            Reset
           </Button>
           <Button
             variant="contained"
