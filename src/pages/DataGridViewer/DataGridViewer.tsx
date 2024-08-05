@@ -142,7 +142,7 @@ export const DataGridViewer = () => {
       onPaginationModelChange={handlePaginationModelChange}
       loading={loading}
       autoHeight
-      getRowId={(row) => row.id} // Garantindo que a DataGrid use o campo id
+      getRowId={(row) => row.id}
       pageSizeOptions={[5, 10, 20, 50, 100]}
       sx={{
         '& .MuiDataGrid-root': {
