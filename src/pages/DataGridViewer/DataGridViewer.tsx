@@ -1,87 +1,8 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { format, parseISO } from 'date-fns'
 import { DataRow } from './types'
-
-const fetchSheetData = async (page: number, pageSize: number, headers: string[], filters: any = {}) => {
-  const spreadsheetId = '1hB_LjBT9ezZigXnC-MblT2PXZledkZqBnvV23ssfSuE'
-  let range = `FMSCA_records (2)!A${page * pageSize + 2}:AE${page * pageSize + pageSize + 2}`
-  if (Object.keys(filters).length > 0) {
-    range = `FMSCA_records (2)!A2:AE100000`
-  }
-  const apiKey = 'AIzaSyBzbSdjViTGRxXk0z12ivoKf7Wk-mloL_8'
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`
-
-  try {
-    const response = await axios.get(url)
-    console.log('Fetched data:', response.data.values)
-
-    if (!response.data.values || response.data.values.length === 0) {
-      return []
-    }
-
-    const rows = response.data.values.map((row: string[]): DataRow => {
-      const obj: any = {}
-      headers.forEach((header, index) => {
-        obj[header] = row[index] || ''
-      })
-      return obj
-    })
-    console.log('Transformed rows:', rows)
-
-    if (Object.keys(filters).length > 0) {
-      const filteredRows = rows.filter((row: any) => {
-        return Object.keys(filters).every((key) => {
-          console.log(`Filtering by ${key}: ${filters[key]}, Row value: ${row[key]}`)
-          return !filters[key] || row[key]?.toString().toLowerCase().includes(filters[key].toLowerCase())
-        })
-      })
-      console.log('Filtered rows:', filteredRows)
-      return filteredRows
-    }
-
-    return rows
-  } catch (error) {
-    console.error('Failed to fetch data:', error)
-    return []
-  }
-}
-
-const fetchTotalRecords = async () => {
-  const spreadsheetId = '1hB_LjBT9ezZigXnC-MblT2PXZledkZqBnvV23ssfSuE'
-  const range = 'FMSCA_records (2)!A1:A'
-  const apiKey = 'AIzaSyBzbSdjViTGRxXk0z12ivoKf7Wk-mloL_8'
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`
-
-  console.log(`Fetching total records from range: ${range}`)
-
-  try {
-    const response = await axios.get(url)
-    console.log(`Total records response: `, response.data)
-    return response.data.values.length - 1
-  } catch (error) {
-    console.error('Failed to fetch total records:', error)
-    return 0
-  }
-}
-
-const fetchHeaders = async () => {
-  const spreadsheetId = '1hB_LjBT9ezZigXnC-MblT2PXZledkZqBnvV23ssfSuE'
-  const range = 'FMSCA_records (2)!A1:AE1'
-  const apiKey = 'AIzaSyBzbSdjViTGRxXk0z12ivoKf7Wk-mloL_8'
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`
-
-  console.log(`Fetching headers from range: ${range}`)
-
-  try {
-    const response = await axios.get(url)
-    return response.data.values[0]
-  } catch (error) {
-    console.error('Failed to fetch headers:', error)
-    return []
-  }
-}
+import { fetchHeaders, fetchSheetData, fetchTotalRecords } from './utils'
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', flex: 0.5 },
