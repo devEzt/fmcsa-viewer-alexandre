@@ -13,7 +13,6 @@ const FilterPanel = ({ onSearch }: any) => {
     legal_name: '',
     dba_name: '',
     physical_address: '',
-    phone: '',
     usdot_number: '',
     power_units: '',
     mc_mx_ff_number: '',
@@ -42,7 +41,6 @@ const FilterPanel = ({ onSearch }: any) => {
       legal_name: '',
       dba_name: '',
       physical_address: '',
-      phone: '',
       usdot_number: '',
       power_units: '',
       mc_mx_ff_number: '',
@@ -115,9 +113,6 @@ const FilterPanel = ({ onSearch }: any) => {
           />
         </Grid>
         <Grid item xs={4}>
-          <TextField label="Phone" name="phone" onChange={handleChange} fullWidth sx={textFieldStyle} />
-        </Grid>
-        <Grid item xs={4}>
           <TextField label="DOT" name="usdot_number" onChange={handleChange} fullWidth sx={textFieldStyle} />
         </Grid>
         <Grid item xs={4}>
@@ -143,8 +138,8 @@ const FilterPanel = ({ onSearch }: any) => {
               color: '#ffffff',
               marginRight: theme.spacing(2),
               '&:hover': {
-                backgroundColor: theme.palette.primary.dark,
-                color: '#ffffff',
+                backgroundColor: '#ffffff',
+                color: '#030303',
               },
               padding: theme.spacing(1.5),
               fontSize: '1rem',
@@ -169,7 +164,7 @@ const FilterPanel = ({ onSearch }: any) => {
               fontSize: '1rem',
             }}
           >
-            Buscar
+            Search
           </Button>
         </Grid>
       </Grid>
