@@ -10,7 +10,7 @@ This project was an incredible experience to fix some concepts applied in REACT 
 
 ## Demo
 
-The application is hosted on Vercel and you can see it in action [aqui](https://github-repo-explorer-dbvd.vercel.app/).
+The application is hosted on Vercel and you can see it in action [CLICK HERE](https://fmcsa-viewer-sable.vercel.app/).
 
 ## Technologies Used
 
