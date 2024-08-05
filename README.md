@@ -2,7 +2,7 @@
 
 ![FMCSA VIEWER Logo](./public/fmcsa-logo.png)
 
-This project was an incredible experience to fix some concepts applied in REACT using MATERIAL UI.
+This project was an incredible experience to fix some concepts applied in REACT using MATERIAL UI. It was one of the few projects where I was able to get to know Google's suite of applications a little better, including the challenge of consuming and maintaining the application's performance in this way. 
 
 ## General
 
