@@ -23,7 +23,7 @@ export const Footer = () => {
         </Link>
         . Developed by
         <Link href="https://github.com/devezt" color="inherit" underline="hover">
-          DevEzt
+          . DevEzt
         </Link>
       </Typography>
     </Box>
