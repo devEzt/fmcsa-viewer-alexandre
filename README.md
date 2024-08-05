@@ -1,6 +1,6 @@
-# GitExplorerDBVD
+# FMCSA VIEWER
 
-![GitExplorer Logo](./public/fmcsa-logo.png)
+![FMCSA VIEWER Logo](./public/fmcsa-logo.png)
 
 This project was an incredible experience to fix some concepts applied in REACT using MATERIAL UI.
 
