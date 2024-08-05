@@ -55,11 +55,9 @@ export const HomePage = () => {
         <Grid item xs>
           <Paper
             style={{
-              padding: theme.spacing(2),
+              padding: theme.spacing(2), // Aumentado para um padding maior
               margin: theme.spacing(2),
               backgroundColor: theme.palette.background.paper,
-              overflow: 'auto',
-              maxHeight: 'calc(100vh - 170px)',
             }}
           >
             <DataGridViewer />

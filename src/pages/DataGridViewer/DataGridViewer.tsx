@@ -1,36 +1,28 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { format, parseISO } from 'date-fns'
+import { DataRow } from './types'
 
-interface DataRow {
-  id: string
-  created_at: string
-  modified_dt: string
-  entity_type: string
-  operating_status: string
-  legal_name: string
-  dba_name: string
-  physical_address: string
-  phone: string
-  usdot_number: string
-  mc_mx_ff_number: string
-  power_units: string
-  out_of_service_date: string
-}
-
-const fetchSheetData = async () => {
+const fetchSheetData = async (page: number, pageSize: number, headers: string[]) => {
   const spreadsheetId = '1hB_LjBT9ezZigXnC-MblT2PXZledkZqBnvV23ssfSuE'
-  const range = 'FMSCA_records (2)'
+  const startRow = page * pageSize + 2
+  const endRow = startRow + pageSize
+  const range = `FMSCA_records (2)!A${startRow}:AE${endRow}`
   const apiKey = 'AIzaSyBzbSdjViTGRxXk0z12ivoKf7Wk-mloL_8'
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`
 
   try {
     const response = await axios.get(url)
-    const headers = response.data.values[0]
-    const rows = response.data.values.slice(1).map((row: string[]): DataRow => {
+
+    if (!response.data.values || response.data.values.length === 0) {
+      return []
+    }
+
+    const rows = response.data.values.map((row: string[], index: number): DataRow => {
       const obj: any = {}
-      row.forEach((cell, index) => {
-        const key = headers[index] as keyof DataRow
+      row.forEach((cell, cellIndex) => {
+        const key = headers[cellIndex] as keyof DataRow
         obj[key] = cell
       })
       return obj
@@ -42,40 +34,116 @@ const fetchSheetData = async () => {
   }
 }
 
+const fetchTotalRecords = async () => {
+  const spreadsheetId = '1hB_LjBT9ezZigXnC-MblT2PXZledkZqBnvV23ssfSuE'
+  const range = 'FMSCA_records (2)!A1:A'
+  const apiKey = 'AIzaSyBzbSdjViTGRxXk0z12ivoKf7Wk-mloL_8'
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`
+
+  console.log(`Fetching total records from range: ${range}`)
+
+  try {
+    const response = await axios.get(url)
+    console.log(`Total records response: `, response.data)
+    return response.data.values.length - 1
+  } catch (error) {
+    console.error('Failed to fetch total records:', error)
+    return 0
+  }
+}
+
+const fetchHeaders = async () => {
+  const spreadsheetId = '1hB_LjBT9ezZigXnC-MblT2PXZledkZqBnvV23ssfSuE'
+  const range = 'FMSCA_records (2)!A1:AE1'
+  const apiKey = 'AIzaSyBzbSdjViTGRxXk0z12ivoKf7Wk-mloL_8'
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`
+
+  console.log(`Fetching headers from range: ${range}`)
+
+  try {
+    const response = await axios.get(url)
+    return response.data.values[0]
+  } catch (error) {
+    console.error('Failed to fetch headers:', error)
+    return []
+  }
+}
+
+const columns: GridColDef[] = [
+  { field: 'id', headerName: 'ID', flex: 0.5 },
+  {
+    field: 'created_dt',
+    headerName: 'Created At',
+    flex: 0.8,
+    valueFormatter: (value) => format(parseISO(value), 'MM/dd/yyyy'),
+  },
+  {
+    field: 'data_source_modified_dt',
+    headerName: 'Modified Date',
+    flex: 0.8,
+    valueFormatter: (value) => format(parseISO(value), 'MM/dd/yyyy'),
+  },
+  { field: 'entity_type', headerName: 'Entity', flex: 0.8 },
+  { field: 'operating_status', headerName: 'Operating Status', flex: 0.8 },
+  { field: 'legal_name', headerName: 'Legal Name', flex: 1.5 },
+  { field: 'dba_name', headerName: 'DBA Name', flex: 1 },
+  { field: 'physical_address', headerName: 'Physical Address', flex: 1.5 },
+  { field: 'phone', headerName: 'Phone', flex: 1 },
+  { field: 'usdot_number', headerName: 'DOT', flex: 0.8 },
+  { field: 'mc_mx_ff_number', headerName: 'MC/MX/FF', flex: 0.5 },
+  { field: 'power_units', headerName: 'Power Units', flex: 0.5 },
+  { field: 'out_of_service_date', headerName: 'Out of Service Date', flex: 0.8 },
+]
+
 export const DataGridViewer = () => {
   const [rows, setRows] = useState<DataRow[]>([])
+  const [page, setPage] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+  const [rowCount, setRowCount] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [headers, setHeaders] = useState<string[]>([])
 
   useEffect(() => {
-    fetchSheetData().then((data) => {
-      setRows(data)
+    fetchHeaders().then((headers) => {
+      setHeaders(headers)
+      fetchTotalRecords().then((total) => {
+        setRowCount(total)
+      })
     })
   }, [])
 
-  const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'created_dt', headerName: 'Created At', width: 150 },
-    { field: 'data_source_modified_dt', headerName: 'Modified Date', width: 150 },
-    { field: 'entity_type', headerName: 'Entity', width: 150 },
-    { field: 'operating_status', headerName: 'Operating Status', width: 150 },
-    { field: 'legal_name', headerName: 'Legal Name', width: 150 },
-    { field: 'dba_name', headerName: 'DBA Name', width: 150 },
-    { field: 'physical_address', headerName: 'Physical Address', width: 150 },
-    { field: 'phone', headerName: 'Phone', width: 150 },
-    { field: 'usdot_number', headerName: 'DOT', width: 150 },
-    { field: 'mc_mx_ff_number', headerName: 'MC/MX/FF', width: 150 },
-    { field: 'power_units', headerName: 'Power Units', width: 150 },
-    { field: 'out_of_service_date', headerName: 'Out of Service Date', width: 150 },
-  ]
+  useEffect(() => {
+    if (headers.length > 0) {
+      setLoading(true)
+      fetchSheetData(page, pageSize, headers).then((data) => {
+        setRows(data)
+        setLoading(false)
+      })
+    }
+  }, [page, pageSize, headers])
+
+  const handlePaginationModelChange = (newModel: { page: number; pageSize: number }) => {
+    if (newModel.page !== page) {
+      setPage(newModel.page)
+    }
+    if (newModel.pageSize !== pageSize) {
+      setPageSize(newModel.pageSize)
+    }
+  }
 
   return (
     <DataGrid
       rows={rows}
       columns={columns}
-      initialState={{
-        pagination: { paginationModel: { pageSize: 10 } },
-      }}
-      pageSizeOptions={[5, 10, 20, 50, 100]}
+      rowCount={rowCount}
+      pagination
+      paginationMode="server"
+      paginationModel={{ page, pageSize }}
+      onPaginationModelChange={handlePaginationModelChange}
+      loading={loading}
       autoHeight
+      getRowId={(row) => row.id} // Garantindo que a DataGrid use o campo id
+      pageSizeOptions={[5, 10, 20, 50, 100]}
       sx={{
         '& .MuiDataGrid-root': {
           backgroundColor: '#ffffff',
