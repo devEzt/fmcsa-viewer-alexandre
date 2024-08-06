@@ -29,6 +29,12 @@ export const MenuBar = () => {
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItem>
+        <ListItem button component={RouterLink} to="/pivotTable" selected={true}>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Pivot Table" />
+        </ListItem>
         <ListItem button disabled>
           <ListItemIcon>
             <ContactMailIcon />
