@@ -2,15 +2,18 @@
 
 ![FMCSA VIEWER Logo](./public/fmcsa-logo.png)
 
-This project was an incredible experience to fix some concepts applied in REACT using MATERIAL UI.
+This project was an incredible experience to fix some concepts applied in REACT using MATERIAL UI. It was one of the few projects where I was able to get to know Google's suite of applications a little better, including the challenge of consuming and maintaining the application's performance in this way. 
 
-## Visão Geral
+## General
 
  The Federal Motor Carrier Safety Administration is an agency within the United States Department of Transportation that regulates the trucking industry in the United States. This application shows various  parameters for a trucking company such as MC, DOT, Carrier/Broker/Shipper, Inspections and others.
+ To see this aplication on the YouTube, you can [CLICK HERE](https://youtu.be/vMGhbeo73y4)
 
 ## Demo
 
-The application is hosted on Vercel and you can see it in action [aqui](https://github-repo-explorer-dbvd.vercel.app/).
+The application is hosted on Vercel and you can see it in action [CLICK HERE](https://fmcsa-viewer-sable.vercel.app/).
+
+
 
 ## Technologies Used
 
@@ -30,7 +33,7 @@ The application is hosted on Vercel and you can see it in action [aqui](https://
 Clone the repository and install the dependencies.
 
 ```bash
-git clone [https://github.com/${user}/.git](https://github.com/devEzt/fmcsa-viewer-alexandre.git)
+git clone https://github.com/devEzt/fmcsa-viewer-alexandre.git
 ```
 
 ```bash
