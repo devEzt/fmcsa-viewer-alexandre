@@ -92,12 +92,6 @@ export const PivotTablePage = () => {
     })),
   }
 
-  const handleDataChange = (newData: any) => {
-    if (newData && newData.data) {
-      setData(newData.data)
-    }
-  }
-
   const options = {
     scales: {
       y: {
