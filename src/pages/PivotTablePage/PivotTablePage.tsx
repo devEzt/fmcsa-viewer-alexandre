@@ -42,6 +42,7 @@ export const PivotTablePage = () => {
   const [loading, setLoading] = useState(true)
   const [view, setView] = useState('table')
   const [currentPage, setCurrentPage] = useState(0)
+  const [pivotData, setPivotData] = useState<any[]>([])
 
   const itemsPerPage = 5
   const theme = useTheme()
@@ -57,6 +58,7 @@ export const PivotTablePage = () => {
           skipEmptyLines: true,
         }).data
         setData(parsedData)
+        setPivotData(parsedData)
         setLoading(false)
       })
       .catch((error) => {
@@ -226,7 +228,7 @@ export const PivotTablePage = () => {
                 <CircularProgress />
               </Box>
             ) : view === 'table' ? (
-              <PivotTableUI data={data} onChange={handleDataChange} />
+              <PivotTableUI data={pivotData} onChange={(s: any) => setPivotData(s)} {...pivotData} />
             ) : (
               <Bar data={chartData} options={options} />
             )}
